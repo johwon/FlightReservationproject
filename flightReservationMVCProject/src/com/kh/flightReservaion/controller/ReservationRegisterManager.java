@@ -58,6 +58,7 @@ public class ReservationRegisterManager {
 		
 		System.out.print("삭제할 데이터의 예약번호를 입력하시오 : ");
 		int no = Integer.parseInt((sc.nextLine()).trim());
+		rvo.setNo(no);
 		
 		boolean successFlag = rdao.reservationDelete(rvo); 
 		
@@ -109,6 +110,5 @@ public class ReservationRegisterManager {
 		for (ReservationVO rv : reservationList) {
 			System.out.println(rv.toString());
 		}
-		
 	}
 }
