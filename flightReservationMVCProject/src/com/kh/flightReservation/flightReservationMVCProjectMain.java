@@ -12,6 +12,7 @@ public class flightReservationMVCProjectMain {
 	public static void main(String[] args) {
 		boolean exitFlag = false;
 		int choiceNum;
+		System.out.println(String.format("%38s", "항공권 예약 프로그램") );
 			while(!exitFlag) {
 				MainViewer.mainMenuView();
 				choiceNum = Integer.parseInt(sc.nextLine());
@@ -54,6 +55,8 @@ public class flightReservationMVCProjectMain {
 	private static void customerMenu() {
 		int choiceNum;
 		CustomerResigterManager crm = new CustomerResigterManager();
+		
+		System.out.println();
 		MainViewer.customerMenuView();
 		choiceNum = Integer.parseInt(sc.nextLine());
 		switch(choiceNum) {
@@ -69,9 +72,13 @@ public class flightReservationMVCProjectMain {
 		case CUSTOMER_CHOICE.DELETE:
 			crm.deleteManager();
 			break;
+		case CUSTOMER_CHOICE.GRADE_PRINT:
+			crm.gradePrintManager();
+			break;
 		case CUSTOMER_CHOICE.MAIN:
 			break;
 		}
+		System.out.println();
 	}
 
 }
