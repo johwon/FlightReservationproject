@@ -16,7 +16,7 @@ public class AirLineDAO {
 	public static String AIRLINE_INSERT = "INSERT INTO PLAYER VALUES(PLAYER_NO_SEQ.nextval,?,?,?,?)";
 	public static String AIRLINE_UPDATE = "UPDATE PLAYER SET NAME = ?, POSSIT = ?, WEEKSAL = ? , GAME = ? WHERE NO = ?";
 	public static String AIRLINE_DELETE = "DELETE FROM PLAYER WHERE NO =?";
-	public static String AIRLINE_GRADE_FUNC = "{ ? = call PLAYER_FUNCTION(?)}";
+	public static String AIRLINE_GRADE_FUNC = "{ ? = AIRLINE_GRADE_FUNC(?)}";
 	public boolean airLineUpdate(AirLineVO avo){
 		boolean successFlag = false;
 		Connection con = null;
