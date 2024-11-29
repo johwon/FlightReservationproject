@@ -129,7 +129,7 @@ public class AirLineDAO {
 			
 			cstmt = con.prepareCall(AIRLINE_GRADE_FUNC);
 			cstmt.registerOutParameter(1, Types.VARCHAR);
-			cstmt.setInt(2, avo.getNo());
+			cstmt.setString(2, avo.getName());
 			int result;
 				result = cstmt.executeUpdate();
 				String message = cstmt.getNString(1);
