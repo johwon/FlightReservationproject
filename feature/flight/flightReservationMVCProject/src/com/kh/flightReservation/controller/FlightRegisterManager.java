@@ -45,6 +45,33 @@ public class FlightRegisterManager {
 		}
 	}
 
+	public void salaryUpProcManager() {
+		FlightDAO fdao = new FlightDAO();
+		FlightVO fvo = new FlightVO();
+		
+		ArrayList<FlightVO> flightList = fdao.flightSelect(fvo);
+		if (flightList.size() != 0) {
+			printflightList(flightList);
+		} else {
+			System.out.println("출력할 데이터가 없습니다.");
+			return;
+		}
+
+		System.out.print("인상할 항공사 번호 입력: >>");
+		int aNo = Integer.parseInt(sc.nextLine());
+		boolean successFlag = fdao.flightSalaryUpProc(aNo);
+
+
+		// 화면출력
+		if (successFlag == true) {
+			System.out.println("항공사 번호가 " +aNo + "인 항공편의 가격을 10% 인상하였습니다.");
+		} else {
+			System.out.println("항공사 번호가 " +aNo + "인 항공편의 가격을 10% 인상하였습니다.");
+		}
+		
+	}
+	
+	
 	public void selectManager() {
 		FlightDAO fdao = new FlightDAO();
 		FlightVO fvo = new FlightVO();

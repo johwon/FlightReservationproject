@@ -1,5 +1,6 @@
 package com.kh.flightReservation.controller;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,7 +16,27 @@ public class FlightDAO {
 	public final String FLIGHT_DELETE = "DELETE FROM FLIGHT WHERE NO = ?";
 	public final String FLIGHT_UPDATE = "UPDATE FLIGHT SET A_NO=?,DEPARTURE_DATE =?,DEPARTURE_AIRPORT=?,ARRIVAL_AIRPORT=?,PRICE=?,SEAT =? WHERE NO =?";
 	public final String FLIGHT_INSERT = "INSERT INTO FLIGHT VALUES(FLIGHT_NO_SEQ.NEXTVAL,?,?,?,?,?,?)";
-
+	public final String FLIGHT_PRICE_PROC = "{CALL FLIGHT_PRICE_PROC(?)}";
+	
+	public boolean flightSalaryUpProc(int aNo) {
+		Connection con = null;
+		CallableStatement cstmt = null;
+		boolean successflag = false;
+		
+		try {
+			con = DBUtility.dbCon();
+			cstmt = con.prepareCall(FLIGHT_PRICE_PROC);
+			cstmt.setInt(1, aNo);
+			int count = cstmt.executeUpdate();
+			successflag = (count != 0) ? (true) : (false);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtility.dbClose(con, cstmt);
+		}
+		return successflag;
+	}
+	
 	public ArrayList<FlightVO> flightSelect(FlightVO fvo) {
 		Connection con = null; 
 		PreparedStatement pstmt = null; 
