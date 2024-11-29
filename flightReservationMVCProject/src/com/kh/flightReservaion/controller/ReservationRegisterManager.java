@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.kh.flightReservaion.model.ReservationAllVO;
 import com.kh.flightReservaion.model.ReservationVO;
 
 public class ReservationRegisterManager {
@@ -104,8 +105,24 @@ public class ReservationRegisterManager {
 		}
 	} 
 	
+	public void selectAllManager() {
+		ReservationDAO rdao = new ReservationDAO();
+		ArrayList<ReservationAllVO> reservationAllList = new ArrayList<ReservationAllVO>();
+
+		reservationAllList = rdao.reservationAllSelect();
+		if (reservationAllList == null) {
+			System.out.println("데이터가 존재하지 않습니다.");
+			return;
+		}
+		printAllReservationList(reservationAllList);
+	}
 	
-	
+	private void printAllReservationList(ArrayList<ReservationAllVO> reservationAllList) {
+		for (ReservationAllVO rv : reservationAllList) {
+			System.out.println(rv.toString());
+		}
+	}
+
 	private void printReservationList(ArrayList<ReservationVO> reservationList) {
 		for (ReservationVO rv : reservationList) {
 			System.out.println(rv.toString());
