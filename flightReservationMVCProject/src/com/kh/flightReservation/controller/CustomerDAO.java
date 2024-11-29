@@ -44,10 +44,11 @@ public class CustomerDAO {
 		return customerList;
 	}
 
-	public void customerInsert(CustomerVO cvo) {
+	public boolean customerInsert(CustomerVO cvo) {
 		Connection con = DBUtility.dbCon();
 		PreparedStatement pstmt = null;
 		ArrayList<CustomerVO> customerList = new ArrayList<CustomerVO>();
+		boolean successFlag = false;
 		
 		try {
 			pstmt = con.prepareStatement(CUSTOMER_INSERT);
@@ -57,21 +58,21 @@ public class CustomerDAO {
 			pstmt.setString(4, cvo.getPassportNumber());
 			int result = pstmt.executeUpdate();
 			if(result != 0) {
-				System.out.println("고객 등록이 완료되었습니다.");
-			}else {
-				System.out.println("고객 등록을 실패하였습니다. 다시 시도해주세요.");
+				successFlag = true;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 		}finally {
 			DBUtility.dbClose(con, pstmt);
 		}
+		return successFlag;
 		
 	}
 
-	public void customerUpdate(CustomerVO cvo) {
+	public boolean customerUpdate(CustomerVO cvo) {
 		Connection con = DBUtility.dbCon();
 		PreparedStatement pstmt = null;
+		boolean successFlag = false;
 		
 		try {
 			pstmt = con.prepareStatement(CUSTOMER_UPDATE);
@@ -81,40 +82,40 @@ public class CustomerDAO {
 			pstmt.setString(4, cvo.getId());
 			int result = pstmt.executeUpdate();
 			if(result != 0) {
-				System.out.println("고객 정보 수정이 완료되었습니다.");
-			}else {
-				System.out.println("고객 정보 수정을 실패하였습니다. 다시 시도해주세요.");
+				successFlag = true;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 		}finally {
 			DBUtility.dbClose(con, pstmt);
 		}
+		return successFlag;
 	}
 
-	public void customerDelete(CustomerVO cvo) {
+	public boolean customerDelete(CustomerVO cvo) {
 		Connection con = DBUtility.dbCon();
 		PreparedStatement pstmt = null;
+		boolean successFlag = false;
 		
 		try {
 			pstmt = con.prepareStatement(CUSTOMER_DELETE);
 			pstmt.setString(1, cvo.getId());
 			int result = pstmt.executeUpdate();
 			if(result != 0) {
-				System.out.println("고객 정보가 삭제되었습니다.");
-			}else {
-				System.out.println("삭제에 실패하였습니다. 다시 시도해주세요.");
+				successFlag = true;
 			}
 		} catch (SQLException e) {
 			System.out.println(e.toString());
 		}finally {
 			DBUtility.dbClose(con, pstmt);
 		}
+		return successFlag;
 	}
 
-	public void customerGradePrint(CustomerVO cvo) {
+	public boolean customerGradePrint(CustomerVO cvo) {
 		Connection con = DBUtility.dbCon();
 		CallableStatement cstmt = null;
+		boolean successFlag = false;
 		
 		try {
 			cstmt = con.prepareCall(CUSTOMER_GRADE_PRINT);
@@ -123,12 +124,17 @@ public class CustomerDAO {
 			cstmt.executeUpdate();
 			
 			String result = cstmt.getString(1);
+			
+			if(result != null) {
+				successFlag = true;
+			}
 			System.out.println(result);
 		} catch (SQLException e) {
 			System.out.println(e.toString());
+		}finally {
+			DBUtility.dbClose(con, cstmt);
 		}
-		
-		DBUtility.dbClose(con, cstmt);
+		return successFlag; 
 		
 	}
 	
